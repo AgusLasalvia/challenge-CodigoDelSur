@@ -1,0 +1,23 @@
+{
+  "name": "challenge-codigodelsur",
+  "version": "1.0.0",
+  "description": "challenge codigodelsur",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AgusLasalvia/challenge-CodigoDelSur.git"
+  },
+  "author": "Agustin Lasalvia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AgusLasalvia/challenge-CodigoDelSur/issues"
+  },
+  "homepage": "https://github.com/AgusLasalvia/challenge-CodigoDelSur#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.6"
+  }
+}
