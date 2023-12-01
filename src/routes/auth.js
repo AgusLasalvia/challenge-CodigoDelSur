@@ -1,22 +1,20 @@
 const { Router } = require('express');
-const {users} = require('../index')
 const route = Router();
 
-route.post('/login/:email', (req,res) => {
-    let email = req.params.email
-	console.log(email)
-	res.send(email)
-	// if (loginValidation(email, password)) res.send(200).json({response: 'success'});
 
-	// else res.send(404).json({response: 'user not found'})
-})
+route.post('/', (req, res) => {
+    let { email, password } = req.body;
+    if (!validateLogin(email, password)) {
+        
+    }
+});
 
 
-const loginValidation = (email,password) => {
-	for (let j of users){
-		if (j.email === email && j.password === password) return true;
-		return false;
-	}
+const validateLogin = (email, password) => {
+    for (let i of system.users) {
+        if (email === i.email && password === i.password) return true;
+    }
+    return false;
 };
 
 
