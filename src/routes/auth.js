@@ -11,7 +11,7 @@ const route = Router();
 //--------------------------------//
 // POST endpoint for auth URL
 route.post('/', (req, res) => {
-	let { email, password } = req.body;
+    let { email, password } = req.body;
 	if (!system.validateLogin(email, password)) {
 		res.status(200).json({ responde: "success" });
 

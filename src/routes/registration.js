@@ -14,9 +14,12 @@ route.post('/', (req, res) => {
     if (!system.validateEmail(email)) {
         let newUser = new user(email, password, firstName, lastName)
         system.Users = newUser // Setter to add a new user
-        res.status(200).json({response:"user registged successfully"})
+        // response with status code 200
+        res.status(200).json({ response: "user registged successfully" })
+        
     } else {
-        res.status(400).json({response:"email already in use"})
+        // response with status code 404
+        res.status(404).json({response:"email already in use"})
     }
 });
 

@@ -19,12 +19,21 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Login Middleware for authentication
+app.use((req, res, next) => {
+    let token = req.headers.authorization;
+    if (token) {
+        next()
+    } else {
+        res.status(401).json({message: "User not logged in"})
+    }
+});
 
 //-------------------------------//
 // Routing configuration
 //-------------------------------//
 app.use('/api/v1/registration', registration);
-app.use('/api/v1/movie',movies)
+app.use('/api/v1/',movies)
 app.use('/api/v1/auth', auth);
 
 
