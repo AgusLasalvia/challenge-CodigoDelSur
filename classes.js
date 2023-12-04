@@ -1,0 +1,102 @@
+const fs = require('fs');
+
+class User {
+	constructor(email, password, firstName, lastName) {
+		this.email = email;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+}
+
+
+class Favorite {
+	constructor(id, name, overview,score) {
+		this.id = id;
+		this.name = name;
+		this.overview = overview;
+		this.score = score;
+	}
+}
+
+
+class System {
+	// Contrsutcor for the class System
+	constructor() {
+		this.users = this.loadUsers() // Automatically load the users in the users.txt
+		this.favorites = this.loadUsers() // Automatically load the users in the users.txt
+
+	}
+
+
+	//---------------------------//
+	// Class Methods
+	//---------------------------//
+	loadUsers() {
+		// Load all users as JSON
+		return JSON.parse(fs.readFileSync('./users.json', 'utf8').toString());
+	};
+
+	loadFavorites() {
+		// Load all favorites as JSON
+		return JSON.parse(fs.readFileSync('./favorites.txt', 'utf8').toString())[0].Favorite;
+	};
+
+
+	// Email validation for the registration endpoint
+	validateEmail(email) {
+		for (let i of this.users) {
+			if (email === i.email) return true;
+		}
+		return false;
+	}
+
+	// Login validation method for the auth endpoint
+	validateLogin(email, password) {
+		for (let i of this.users) {
+			if (email === i.email && password === i.password) return true;
+		}
+		return false;
+	};
+
+	// Getter that return created users
+	get Users() {
+		return this.users;
+	}
+
+	// Setter that add a new User
+	set Users(newUser) {
+		this.users.push(newUser);
+		fs.writeFile('users.json', JSON.stringify(this.users), (err) => {
+			if (err) throw err;
+			console.log('new user added');
+		});
+
+	}
+
+	//  Getter that return created all the favorites movies
+	get Favorites() {
+		return this.favorites;
+	}
+
+	// Setter that add a new User
+	set Favorites(newFavorites) {
+		// Adds a new Movie into Favorites list
+		this.favorites.push(newFavorites);
+		// Write the changes in the favorites json file
+		fs.writeFile('favorites.json', JSON.stringify(this.favorites), (err) => {
+			if (err) throw err; // if theres an error show it in the console
+			console.log('new favorites added'); // if not, print successfull message
+		});
+	}
+
+	usersFavoriteMovies() {
+		
+	}
+
+}
+
+
+// Module exports clases and variable type System
+module.exports = { User, Favorite };
+module.exports.system = new System();
