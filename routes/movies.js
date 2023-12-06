@@ -27,11 +27,13 @@ route.get('/', (req, res) => {
 		})
 });
 
-
+// GET endpoint for favorites movies
 route.get('/favorites', (req,res) => {
 	
 }),
 
+// POST endpoint to add a favorite movie
+route.post('/favorites', (req, res) => { })
 
 
 module.exports = route;
