@@ -11,7 +11,7 @@ const route = Router();
 // POST endpoint for registration URL
 route.post('/', (req, res) => {
     const { email, password, firstName, lastName } = req.body;
-    if (!system.validateEmail(email)) {
+    if (!system.validateEmail(email) && fieldValidation(email, password, firstName, lastName)) {
         let newUser = new User(email, password, firstName, lastName)
         system.Users = newUser // Setter to add a new user
         // response with status code 200
@@ -24,6 +24,13 @@ route.post('/', (req, res) => {
 });
 
 
-
+// function to validate the fields
+function fieldValidation(email, password, firstName, lastName){
+    if (email == "" || password == "" || firstName == "" || lastName == "") {
+        return false;
+    } else {
+        return true;
+    }
+}
 
 module.exports = route;

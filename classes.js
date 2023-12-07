@@ -66,12 +66,12 @@ class System {
     
 
     searchToken(token) {
-        console.log(this.activeTokens)
         for (let i of this.activeTokens) {
             if (i == token) return true;
         }
         return false;
-    }
+	}
+	
 
     deleteToken(token) { 
         for (let x in this.activeTokens) {
@@ -91,29 +91,28 @@ class System {
 		this.users.push(newUser);
 		fs.writeFile('users.json', JSON.stringify(this.users), (err) => {
 			if (err) throw err;
-			console.log('new user added');
 		});
 
 	}
 
 	//  Getter that return created all the favorites movies
-	get Favorites() {
-		return this.favorites;
+	userFavorites(email) {
+		let newList = [];
+		for (let i of this.favorites) {
+			if (email === i.email) newList.push(i);
+		}
+		return newList;
 	}
 
 	// Setter that add a new User
-	set Favorites(newFavorites) {
+	addUserNewFavorite(email,newFavorites) {
 		// Adds a new Movie into Favorites list
-		this.favorites.push(newFavorites);
+		this.favorites.push({"email":email,"movie":newFavorites});
 		// Write the changes in the favorites json file
 		fs.writeFile('favorites.json', JSON.stringify(this.favorites), (err) => {
 			if (err) throw err; // if theres an error show it in the console
 			console.log('new favorites added'); // if not, print successfull message
 		});
-	}
-
-	usersFavoriteMovies() {
-		
 	}
 
 }

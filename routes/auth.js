@@ -13,16 +13,30 @@ const route = Router();
 route.post('/login', (req, res) => {
     let { email, password } = req.body; // retreive the email and password from the body
     let token = btoa(`${email}:${password}`) // create a token for that user
-	if (system.validateEmail(email, password)) {
-        system.activeTokens.push(token); // add the token to the activeToken 
-        res.status(200).header({ 'Authorization': token }).json({ responde: "success" });
-        
-        console.log(system.activeTokens);
-	} else {
-		res.status(401).json({ responde: "user not found" });
-	};
+
+    if (system.validateEmail(email) && fieldValidation(email,password)) {
+        if (!system.searchToken(token)) {
+            system.activeTokens.push(token); // add the token to the activeToken 
+            res.status(200).json({ responde: "success", token: token });
+            console.log(system.activeTokens);
+        } else {
+            res.status(401).json({ responde: "user already logged in" });
+        }
+    } else {
+        res.status(401).json({ responde: "user not found" });
+    };
 });
 
+
+
+// function to validate the fields
+const fieldValidation = (email, password) => {
+    if (email == "" || password == "") {
+        return false;
+    } else {
+        return true;
+    }
+ }
 
 
 

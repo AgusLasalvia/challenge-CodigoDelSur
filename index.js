@@ -3,6 +3,7 @@
 //--------------------------------//
 const { system } = require('./classes');
 const express = require('express');
+const cors = require('cors');
 const app = express();
 
 //--------------------------------//
@@ -14,10 +15,10 @@ const logout = require('./routes/logout');
 const registration = require('./routes/registration');
 
 
-
 //-------------------------------//
 // Express configuration
 //-------------------------------//
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -28,11 +29,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use((req, res, next) => {
     // if the token is not in the active list
     // take the authorization headers value and save the base64 encoded string
+    console.log(req.headers.authorization)
     if (!req.headers.authorization || !system.searchToken(req.headers.authorization.split(' ')[1])) { 
         return res.status(401).json({ message:'you must be logged in' }); // responde to the client with non existing active user.
     }
     next();
 }); 
+
 //-------------------------------//
 // Routing configuration
 //-------------------------------//
