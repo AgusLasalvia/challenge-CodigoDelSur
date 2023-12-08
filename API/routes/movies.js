@@ -51,9 +51,10 @@ route.get('/favorites', (req, res) => {
 
 // POST endpoint to add a favorite movie
 route.post('/favorites', (req, res) => { 
-	let email = atob(req.headers.authorization.split(' ')[1]).split[':'][0]
+	console.log(req.body)
+	// let email = atob(req.headers.authorization.split(' ')[1]).split[':'][0]; // gets the email from the decoded token
 	let movie = req.body; // gets the movie from the body
-	system.addFavorite(email, movie); // adds the movie to the user favorites
+	// system.addUserNewFavorite(email, movie); // adds the movie to the user favorites
 	res.status(200).json({ message: "movie added to favorites" }); // response with a message
 });
 

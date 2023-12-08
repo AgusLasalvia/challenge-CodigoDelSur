@@ -15,7 +15,7 @@ route.post('/', (req, res) => {
         let newUser = new User(email, password, firstName, lastName)
         system.Users = newUser // Setter to add a new user
         // response with status code 200
-        res.status(200).json({ response: "user registged successfully" })
+        res.status(200).json({ response: "success" })
 
     } else {
         // response with status code 404

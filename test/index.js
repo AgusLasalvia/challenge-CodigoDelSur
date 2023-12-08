@@ -1,8 +1,8 @@
 
-
+localStorage.token = null
 
 document.querySelector('#btnRegistration').addEventListener('click', () => {
-    
+
     let email = document.querySelector('#txtRegistrationEmail').value;
     let password = document.querySelector('#txtRegistrationPassword').value;
     let firstName = document.querySelector('#txtRegistrationFirstName').value;
@@ -23,6 +23,9 @@ document.querySelector('#btnRegistration').addEventListener('click', () => {
     })
         .then(response => response.json())
         .then(data => {
+            if (data.response == 'success') {
+                document.querySelector('#pRegistration').innerHTML = `registration Successfully`
+            }
             console.log(data);
         })
 })
@@ -44,25 +47,55 @@ document.querySelector('#btnLogin').addEventListener('click', () => {
     })
         .then(response => response.json())
         .then((data) => {
-            localStorage.setItem('token', data.token);
+            sessionStorage.setItem('token', data.token);
             console.log(data)
-            // document.querySelector('#pActualUser').innerHTML = `USUARIO: ${atob(data.token).split(':')[0]}`
+            if (data.token != undefined)
+                document.querySelector('#pActualUser').innerHTML = `USUARIO: ${atob(data.token).split(':')[0]}`
         })
 })
 
 
 
 
-document.querySelector('#btn').addEventListener('click', () => {
-    fetch('http://localhost:3000/api/v1/movies', {
+
+document.querySelector('#btnGetMovies').addEventListener('click', () => {
+    let movieSelect = document.querySelector('#slcMovies')
+    movieSelect.innerHTML = ""
+    let keyword = document.querySelector('#txtKeyword').value
+    let url = "http://localhost:3000/api/v1/movies"
+    if (keyword != "") {
+        url += `?keyword=${keyword}`
+    }
+    fetch(url, {
         headers: {
             'Content-Type': 'application/json',
-            'authorization': 'Basic ' + btoa('admin:admin')
+            'authorization': 'Basic ' + sessionStorage.getItem('token')
         },
         method: 'GET'
     })
         .then(response => response.json())
-        .then(data => {
-            console.log(data);
+        .then((data) => {
+            data.forEach(element => {
+                console.log(element)
+                movieSelect.innerHTML += `<option value=${element.id}>${element.title}</option>`
+            });
         })
-})
+});
+
+
+
+document.querySelector('#btnAddFavorite').addEventListener('click', () => { 
+    let movie = document.querySelector('#slcMovies').value
+    fetch('http://localhost:3000/api/v1/movies/favorites', {
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': 'Basic ' + sessionStorage.getItem('token')
+        },
+        method: 'POST',
+        body: JSON.stringify({"id":movie})
+    })
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data)
+        })
+});
