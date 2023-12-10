@@ -2,7 +2,7 @@
 // Node JS modules imports
 //--------------------------------//
 const { Router } = require('express');
-const { system } = require('../classes');
+const { system } = require('../js/classes');
 const route = Router();
 
 route.delete('/', (req, res) => {
@@ -10,7 +10,7 @@ route.delete('/', (req, res) => {
     console.log(token)
     system.deleteToken(token);
     console.log(system.activeTokens)
-    res.json({message:"token deleted successfully"})
+    res.json({ message: "token deleted successfully" })
 });
 
 

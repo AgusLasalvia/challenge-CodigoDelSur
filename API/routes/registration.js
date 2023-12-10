@@ -1,7 +1,7 @@
 //--------------------------------//
 // Node JS modules imports
 //--------------------------------//
-const { system, User } = require('../classes')
+const { system, User } = require('../js/classes')
 const { Router } = require('express');
 const route = Router();
 
@@ -25,7 +25,7 @@ route.post('/', (req, res) => {
 
 
 // function to validate the fields
-function fieldValidation(email, password, firstName, lastName){
+function fieldValidation(email, password, firstName, lastName) {
     if (email == "" || password == "" || firstName == "" || lastName == "") {
         return false;
     } else {

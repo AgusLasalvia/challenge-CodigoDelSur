@@ -1,4 +1,3 @@
-
 localStorage.token = null
 
 document.querySelector('#btnRegistration').addEventListener('click', () => {
@@ -59,6 +58,7 @@ document.querySelector('#btnLogin').addEventListener('click', () => {
 
 
 document.querySelector('#btnGetMovies').addEventListener('click', () => {
+    let movieInformation
     let movieSelect = document.querySelector('#slcMovies')
     movieSelect.innerHTML = ""
     let keyword = document.querySelector('#txtKeyword').value
@@ -76,26 +76,42 @@ document.querySelector('#btnGetMovies').addEventListener('click', () => {
         .then(response => response.json())
         .then((data) => {
             data.forEach(element => {
-                console.log(element)
-                movieSelect.innerHTML += `<option value=${element.id}>${element.title}</option>`
+                movieSelect.innerHTML += `<option value='${element.id}'>${element.title}</option>`
             });
         })
 });
 
 
 
-document.querySelector('#btnAddFavorite').addEventListener('click', () => { 
-    let movie = document.querySelector('#slcMovies').value
-    fetch('http://localhost:3000/api/v1/movies/favorites', {
+document.querySelector('#btnAddFavorite').addEventListener('click', () => {
+    let movieID = document.querySelector('#slcMovies').value
+    fetch(`http://localhost:3000/api/v1/movies/favorites?id=${movieID}`, {
         headers: {
             'Content-Type': 'application/json',
             'authorization': 'Basic ' + sessionStorage.getItem('token')
         },
         method: 'POST',
-        body: JSON.stringify({"id":movie})
     })
         .then(response => response.json())
         .then((data) => {
             console.log(data)
         })
+});
+
+
+document.querySelector("#btnLogout").addEventListener('click', () => {
+    fetch('http://localhost:3000/api/v1/logout',
+        {
+            headers: {
+                "Content-Type": "application/json",
+                'authorization': 'Basic ' + sessionStorage.getItem('token')
+            },
+            method: 'DELETE'
+        }
+    )
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data)
+        })
+
 });

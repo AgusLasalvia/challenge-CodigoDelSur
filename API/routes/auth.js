@@ -1,7 +1,7 @@
 //--------------------------------------//
 // Node JS modules imports
 //--------------------------------------//
-const { system } = require('../classes')
+const { system } = require('../js/classes')
 const { Router } = require('express');
 const route = Router();
 
@@ -14,11 +14,11 @@ route.post('/login', (req, res) => {
     let { email, password } = req.body; // retreive the email and password from the body
     let token = btoa(`${email}:${password}`) // create a token for that user
 
-    if (system.validateEmail(email) && fieldValidation(email,password)) {
+    if (system.validateEmail(email) && fieldValidation(email, password)) {
         if (!system.searchToken(token)) {
             system.activeTokens.push(token); // add the token to the activeToken 
             res.status(200).json({ responde: "success", token: token });
-            console.log(system.activeTokens);
+
         } else {
             res.status(401).json({ responde: "user already logged in" });
         }
@@ -36,7 +36,7 @@ const fieldValidation = (email, password) => {
     } else {
         return true;
     }
- }
+}
 
 
 
