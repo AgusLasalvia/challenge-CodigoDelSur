@@ -1,4 +1,8 @@
 const fs = require('fs');
+const path = require('path');
+
+const usersJSON = path.join(__dirname, '../jsons/users.json');
+const favoritesJSON = path.join(__dirname, '../jsons/favorites.json');
 
 class User {
     // Contrsutcor for the class User
@@ -17,6 +21,7 @@ class Movie {
         this.title = title;
         this.overview = overview;
         this.id = id;
+        
     }
 }
 
@@ -24,6 +29,7 @@ class Movie {
 class System {
     // Contrsutcor for the class System
     constructor() {
+        
         this.users = [] // Automatically load the users in the users.txt
         this.favorites = [] // Automatically load the users in the users.txt
         this.activeTokens = [
@@ -32,7 +38,7 @@ class System {
         ];
         this.loadUsers();
         this.loadFavorites();
-
+        console.log();
     }
 
     //---------------------------//
@@ -40,11 +46,11 @@ class System {
     //---------------------------//
 
     loadUsers() {
-        this.users = require('./users.json');
+        this.users = require('../jsons/users.json');
     }
 
     loadFavorites() {
-        this.favorites = require('./favorites.json');
+        this.favorites = require('../jsons/favorites.json');
     }
     // Getter that return created users
     get Users() {
@@ -112,14 +118,14 @@ class System {
     //Save methods
     saveFavorites() {
         // Write the changes in the favorites json file
-        fs.writeFile(__dirname + '/favorites.json', JSON.stringify(this.favorites), (err) => {
+        fs.writeFile(favoritesJSON + '/favorites.json', JSON.stringify(this.favorites), (err) => {
             if (err) throw err; // if theres an error show it in the console
             // console.log('new favorites added'); // if not, print successfull message
         });
     }
 
     saveUsers() {
-        fs.writeFile(__dirname + "/users.json", JSON.stringify(this.users), (err) => {
+        fs.writeFile(usersJSON, JSON.stringify(this.users), (err) => {
             if (err) throw err;
         });
     }
