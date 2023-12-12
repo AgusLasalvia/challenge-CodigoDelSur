@@ -58,7 +58,6 @@ document.querySelector('#btnLogin').addEventListener('click', () => {
 
 
 document.querySelector('#btnGetMovies').addEventListener('click', () => {
-    let movieInformation
     let movieSelect = document.querySelector('#slcMovies')
     movieSelect.innerHTML = ""
     let keyword = document.querySelector('#txtKeyword').value

@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "3122b2a3-554d-4a04-82c2-51941da0929a",
-		"name": "CDS challenge POSTMAN Test",
+		"_postman_id": "e4fba39d-b0ca-4e5d-975a-251a4f698e42",
+		"name": "CDS challenge POSTMAN",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "31541731"
 	},
@@ -199,7 +199,10 @@
 			"name": "User Favorites Test",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": ""
+				}
 			},
 			"response": []
 		}

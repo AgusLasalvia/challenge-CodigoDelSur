@@ -8,7 +8,7 @@ const login = (req, res) => {
     const token = btoa(`${email}:${password}`);
 
     // Validate email and fields
-    if (system.validateEmail(email) && fieldValidationLogin(email, password)) {
+    if (system.validateLogin(email,password) && fieldValidationLogin(email, password)) {
         if (!searchToken(token)) {
             createToken(req, res);
 
@@ -16,7 +16,7 @@ const login = (req, res) => {
             res.status(401).json({ response: "user already logged in" });
         }
     } else {
-        res.status(404).json({ response: "user not found" });
+        res.status(404).json({ response: "user not found, verify email and password" });
     };
 };
 
