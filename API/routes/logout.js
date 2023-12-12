@@ -2,14 +2,12 @@
 // Node JS modules imports
 //--------------------------------//
 const { Router } = require('express');
-const { system } = require('../js/classes');
+const { deleteToken } = require('../controllers/tokenController');
 const route = Router();
 
+// DELETE endpoint for logout URL
 route.delete('/', (req, res) => {
-    let token = req.headers.authorization.split(' ')[1];
-    system.deleteToken(token);
-    console.log(system.activeTokens)
-    res.json({ message: "token deleted successfully" })
+    deleteToken(req, res);
 });
 
 

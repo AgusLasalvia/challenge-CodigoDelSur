@@ -75,6 +75,7 @@ class System {
     // Setter that add a new User
     addUserNewFavorite(email, newFavorites) {
         // Adds a new Movie into Favorites list
+        newFavorites.addedDate = new Date();
         this.favorites.push({ "email": email, "movie": newFavorites });
         this.saveFavorites();
     }
