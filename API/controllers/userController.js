@@ -32,7 +32,7 @@ const registration = (req, res) => {
 
     } else {
         // response with status code 404
-        res.status(401).json({ response: "email already in use" })
+        res.status(404).json({ response: "email already in use or verify empty fields" })
     }
 };
 

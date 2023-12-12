@@ -52,29 +52,33 @@ const getFavorites = (req, res) => {
     if (listFavorites.length > 0) { // if the list is not empty
         res.status(200).json(listFavorites); // response with the list of movies
     } else {
-        res.status(401).json({ message: "no favorites movies" }) // response with a error and no movies for that user
+        res.status(404).json({ message: "no favorites movies" }) // response with a error and no movies for that user
     }
 };
 
 
 const addFavorite = (req, res) => {
     let id = Number(req.query.id);
-    fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=d64f9fd75f1a32d59606d4d042b42ee7`,
-        {
-            headers:
-                { 'Content-Type': 'application/json' },
-            method: 'GET',
-        })
-        .then(response => response.json())
-        .then((data) => {
-            let email = atob(req.headers.authorization.split(' ')[1]).split(':')[0]
-            let newMovie = new Movie(data.id, data.title, data.overview, id);
-            system.addUserNewFavorite(email, newMovie);
-            res.status(200).json({ message: "movie added to favorites" }); // response with a message
+    if (isNaN(id)) {
+        res.status(404).json({ message: "movie not found" }) // if theres an error, response with a error message
+    } else {
+        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=d64f9fd75f1a32d59606d4d042b42ee7`,
+            {
+                headers:
+                    { 'Content-Type': 'application/json' },
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .then((data) => {
+                let email = atob(req.headers.authorization.split(' ')[1]).split(':')[0]
+                let newMovie = new Movie(data.id, data.title, data.overview, id);
+                system.addUserNewFavorite(email, newMovie);
+                res.status(200).json({ message: "movie added to favorites" }); // response with a message
 
-        }).catch((err) => {
-            res.status(401).json({ message: "movie already in favorites" }) // if theres an error, response with a error message
-        })
+            }).catch((err) => {
+                res.status(400).json({ message: "movie already in favorites" }) // if theres an error, response with a error message
+            })
+    }
 
 }
 
