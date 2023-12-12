@@ -84,11 +84,14 @@ document.querySelector('#btnGetMovies').addEventListener('click', () => {
 
 document.querySelector('#btnAddFavorite').addEventListener('click', () => {
     let movieID = document.querySelector('#slcMovies').value
-    fetch(`http://localhost:3000/api/v1/movies/favorites?id=${movieID}`, {
+    fetch(`http://localhost:3000/api/v1/movies/favorites`, {
         headers: {
             'Content-Type': 'application/json',
             'authorization': 'Basic ' + sessionStorage.getItem('token')
         },
+        body: JSON.stringify({
+            "id": movieID
+        }),
         method: 'POST',
     })
         .then(response => response.json())
