@@ -75,7 +75,7 @@ const addFavorite = (req, res) => {
             .then((data) => {
                 let email = atob(req.headers.authorization.split(' ')[1]).split(':')[0]
                 if (data.id != undefined) {
-                    let newMovie = new Movie(data.id, data.title, data.overview, id);
+                    let newMovie = new Movie(data.title, data.overview, id);
                     system.addUserNewFavorite(email, newMovie);
                     res.status(200).json({ message: "movie added to favorites" }); // response with a message
                 } else {
