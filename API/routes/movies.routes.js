@@ -1,7 +1,8 @@
 //--------------------------------//
 // Node JS modules imports
 //--------------------------------//
-const {getFavorites,getMovie,addFavorite} = require('../controllers/movieController')
+const { getFavorites, getMovie, addFavorite } = require('../controllers/movie.controllers')
+const { Middleware } = require('../controllers/middleware.controllers');
 const { Router } = require('express');
 const route = Router();
 
@@ -12,19 +13,13 @@ const route = Router();
 // Movies endpoint
 //-------------------------------//
 // GET endpoint with keyword implementation
-route.get('/', (req, res) => {
-    getMovie(req, res);
-});
+route.get('/', Middleware, getMovie);
 
 // GET endpoint for favorites movies
-route.get('/favorites', (req, res) => {
-    getFavorites(req, res);
-});
+route.get('/favorites', Middleware, getFavorites);
 
 // POST endpoint to add a favorite movie
-route.post('/favorites', (req, res) => {
-    addFavorite(req, res);
-});
+route.post('/favorites', Middleware, addFavorite);
 
 // export the route
 module.exports = route;

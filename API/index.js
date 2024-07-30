@@ -9,16 +9,16 @@ const app = express();
 // --------------------------------//
 // Middleware Controller Import
 // --------------------------------//
-const { Middleware } = require('./controllers/middlewareController');
+const { Middleware } = require('./controllers/middleware.controllers');
 
 
 //--------------------------------//
 // Route imports
 //--------------------------------//
-const registration = require('./routes/registration');
-const movies = require('./routes/movies');
-const logout = require('./routes/logout');
-const auth = require('./routes/auth');
+const registration = require('./routes/registration.routes');
+const movies = require('./routes/movies.routes');
+const logout = require('./routes/logout.routes');
+const auth = require('./routes/auth.routes');
 
 
 //-------------------------------//
@@ -32,9 +32,9 @@ app.use(express.urlencoded({ extended: false }));
 //-------------------------------//
 // Middleware
 //-------------------------------//
-app.use((req, res, next) => {
-    Middleware(req, res, next);
-});
+// app.use((req, res, next) => {
+// 	Middleware(req, res, next);
+// });
 
 //-------------------------------//
 // Routing configuration
